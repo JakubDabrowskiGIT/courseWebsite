@@ -1,0 +1,73 @@
+import React, {useState, useEffect, useCallback} from 'react';
+import axios from "axios";
+import {useDropzone} from "react-dropzone";
+import './Item.css';
+
+function Item() {
+
+    const [items, setItems] = useState([]);
+
+    const fetchItems = () => {
+        axios.get("http://localhost:8080/backend").then(res => {
+            console.log(res);
+            setItems(res.data);
+        });
+    }
+
+    useEffect(() => {
+        fetchItems();
+    }, []);
+
+    return items.map((items, index) => {
+        return (
+            <div key={index}>
+                <br/>
+                <br/>
+                {items.id ?
+                    <img alt={'No img'} src={`http://localhost:8080/backend/${items.id}/image/download`}/> : null}
+                <h1>{items.name}</h1>
+                <p>{items.description}</p>
+                <p>{items.price}</p>
+                <p>{items.id}</p>
+                <Dropzone {...items}/>
+                {/*= id = {items.id}*/}
+                <br/>
+            </div>
+        );
+    });
+};
+
+function Dropzone({id}) {
+    const onDrop = useCallback(acceptedFiles => {
+        const file = acceptedFiles[0];
+        console.log(file);
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        axios.post(`http://localhost:8080/backend/${id}/image/upload`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }).then(() => {
+            console.log("file uploaded successfully");
+        }).catch(err => {
+            console.log(err);
+        });
+
+    }, [id]);
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
+
+    return (
+        <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            {
+                isDragActive ?
+                    <p>Drop your item photo</p> :
+                    <p>Drag od drop your item photo</p>
+            }
+        </div>
+    )
+}
+
+export default Item;
