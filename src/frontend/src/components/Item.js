@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import axios from "axios";
 import {useDropzone} from "react-dropzone";
-import './Item.css';
+import './Item.scss';
+import {Card} from "react-bootstrap";
 
 function Item() {
 
@@ -20,19 +21,22 @@ function Item() {
 
     return items.map((items, index) => {
         return (
-            <div key={index}>
-                <br/>
-                <br/>
-                {items.id ?
-                    <img alt={'No img'} src={`http://localhost:8080/backend/${items.id}/image/download`}/> : null}
-                <h1>{items.name}</h1>
-                <p>{items.description}</p>
-                <p>{items.price}</p>
-                <p>{items.id}</p>
-                <Dropzone {...items}/>
-                {/*= id = {items.id}*/}
-                <br/>
-            </div>
+                <div key={index} className="cardStyle">
+                    <Card>
+                        {items.id ? <Card.Img variant="top" alt={'No img'} src={`http://localhost:8080/backend/${items.id}/image/download`}/> : null}
+                        <Card.Body>
+                            <Card.Title><p>{items.name}</p></Card.Title>
+                            <Card.Text>
+                                {items.description}
+                                {items.price}
+                                <Dropzone {...items}/>
+                            </Card.Text>
+                        </Card.Body>
+                        <Card.Footer>
+                            <small className="text-muted">Last updated 3 mins ago</small>
+                        </Card.Footer>
+                    </Card>
+                </div>
         );
     });
 };
