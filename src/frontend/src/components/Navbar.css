@@ -156,3 +156,9 @@
         transition: 250ms;
     }
 }
+
+.linearLine{
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(45deg, red, blue);
+}

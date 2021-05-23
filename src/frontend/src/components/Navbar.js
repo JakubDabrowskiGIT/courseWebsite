@@ -73,6 +73,7 @@ function Navbar() {
                     {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
                 </div>
             </nav>
+            <div className="linearLine" />
         </>
     );
 }
