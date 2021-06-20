@@ -33,9 +33,16 @@ public class ItemController {
         Item item1 = new Item("Golarka", "OneBlade", 200.5);
         Item item2 = new Item("Iphone", "12 pro", 5000);
         Item item3 = new Item("Dell", "XPS 13", 7900);
+        Item item4 = new Item("Golarka", "OneBlade", 200.5);
+        Item item5 = new Item("Iphone", "12 pro", 5000);
+        Item item6 = new Item("Dell", "XPS 13", 7900);
+        Item item7 = new Item("Golarka", "OneBlade", 200.5);
+        Item item8 = new Item("Iphone", "12 pro", 5000);
+        Item item9 = new Item("Dell", "XPS 13", 7900);
+
         List<Item> items = itemService.getAll();
         if(items.isEmpty()) {
-            itemService.save(Arrays.asList(item1, item2, item3));
+            itemService.save(Arrays.asList(item1, item2, item3, item4, item5, item6, item7, item8, item9));
         }
 
         return items;
